@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
 const VideoSchema= new mongoose.Schema({
     userId:{
@@ -21,10 +21,14 @@ const VideoSchema= new mongoose.Schema({
         type:Number,
         default:0
      },
-     videoLikes:{
-        type:Number,
-        default:0
-     },
+     likes: {
+      type: [String],
+      default: [],
+    },
+    dislikes: {
+      type: [String],
+      default: [],
+    },
 
 
 
