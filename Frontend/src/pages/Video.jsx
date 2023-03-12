@@ -3,9 +3,7 @@ import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
 
 const Container = styled.div`
   display: flex;
@@ -53,9 +51,6 @@ const Hr = styled.hr`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Recommendation = styled.div`
-  flex: 2;
-`;
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
@@ -78,31 +73,11 @@ const ChannelDetail = styled.div`
   color: ${({ theme }) => theme.text};
 `;
 
-const ChannelName = styled.span`
-  font-weight: 500;
-`;
-
-const ChannelCounter = styled.span`
-  margin-top: 5px;
-  margin-bottom: 20px;
-  color: ${({ theme }) => theme.textSoft};
-  font-size: 12px;
-`;
-
 const Description = styled.p`
   font-size: 14px;
 `;
 
-const Subscribe = styled.button`
-  background-color: #cc1a00;
-  font-weight: 500;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  height: max-content;
-  padding: 10px 20px;
-  cursor: pointer;
-`;
+
 
 const Video = () => {
   return (
@@ -132,9 +107,6 @@ const Video = () => {
             <Button>
               <ReplyOutlinedIcon /> Share
             </Button>
-            <Button>
-              <AddTaskOutlinedIcon /> Save
-            </Button>
           </Buttons>
         </Details>
         <Hr />
@@ -142,8 +114,6 @@ const Video = () => {
           <ChannelInfo>
             <Image src="https://yt3.ggpht.com/yti/APfAmoE-Q0ZLJ4vk3vqmV4Kwp0sbrjxLyB8Q4ZgNsiRH=s88-c-k-c0x00ffffff-no-rj-mo" />
             <ChannelDetail>
-              <ChannelName>Lama Dev</ChannelName>
-              <ChannelCounter>200K subscribers</ChannelCounter>
               <Description>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Doloribus laborum delectus unde quaerat dolore culpa sit aliquam
@@ -152,26 +122,10 @@ const Video = () => {
               </Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
         </Channel>
         <Hr />
         <Comments/>
       </Content>
-      <Recommendation>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-      </Recommendation>
     </Container>
   );
 };
