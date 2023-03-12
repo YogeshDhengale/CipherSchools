@@ -10,8 +10,8 @@ router.delete("/:id", verifyToken, deleteUser)
 
 router.get("/find/:id", getUser)
 
-router.put("/like/:videoid", verifyToken, like)
+router.put("/like/:videoId", verifyToken, like)
 
-router.put("/dislike/:videoid", verifyToken, dislike)
+router.put("/dislike/:videoId", verifyToken, dislike)
 
 export default router;

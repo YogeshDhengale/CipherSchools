@@ -54,9 +54,6 @@ export const like = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-    
-console.log(id)
-    
 }
 export const dislike = async (req, res, next) => {
     const id = req.user.id;
