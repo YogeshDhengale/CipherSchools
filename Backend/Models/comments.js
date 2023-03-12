@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const CommentsSchema= new mongoose.Schema({
     userId:{
        type:String,
        required: true 
     },
-    videoID:{
+    videoId:{
         type:String,
         required: true 
      },
