@@ -13,16 +13,21 @@ const Home = () => {
   const [videos, setVideos] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8800/api/video/randome')
-    .then(response => console.log(response.data))
-    .catch(error => console.error(error));
+    
+    const fetchVideos=async ()=>{
+      const res=await axios.get("http://localhost:8800/api/video/randome")
+      setVideos(res.data)
+    }
+    fetchVideos()
   }, [])
+
+
 
   return (
     <Container>
-      {videos.map((video) => {
-        <Card />
-      })}
+      {videos.map((video) =>(
+        <Card key={video._id} video={video}/>
+      ))}
     </Container>
   );
 };
