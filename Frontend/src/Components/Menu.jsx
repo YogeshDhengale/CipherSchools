@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import LamaTube from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
@@ -21,13 +20,11 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  font-size: 50px
   font-weight: bold;
   margin-bottom: 25px;
 `;
 
-const Img = styled.img`
-  height: 25px;
-`;
 
 const Item = styled.div`
   display: flex;
@@ -35,7 +32,7 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 7.5px 0px;
-
+  margin: 0;
   &:hover {
     background-color: ${({ theme }) => theme.soft};
   }
@@ -66,15 +63,14 @@ const Menu = ({ darkMode, setDarkMode }) => {
     <Container>
       <Wrapper>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <Logo>
-            <Img src={LamaTube} />
+          <Logo style={{fontSize:'20px', fontFamily:'Righteous'}}>
             CipherStreams
           </Logo>
         </Link>
         <Item>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <HomeIcon />
-          Home
+        <Link to="/" style={{ textDecoration: "none", color: "inherit", marginTop:"none", gap:'20px'}}>
+          <HomeIcon style={{marginRight:"20px"}}/>
+            Home
           </Link>
         </Item>
         <Hr />
