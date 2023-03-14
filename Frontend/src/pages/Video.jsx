@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import Comments from "../components/Comments";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 
 const Container = styled.div`
   display: flex;
@@ -73,6 +79,11 @@ const ChannelDetail = styled.div`
   color: ${({ theme }) => theme.text};
 `;
 
+const ChannelName = styled.span`
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+`;
+
 const Description = styled.p`
   font-size: 14px;
 `;
@@ -80,13 +91,54 @@ const Description = styled.p`
 
 
 const Video = () => {
+  const { currentUser } = useSelector(state => state.user);
+  const { currentVideo } = useSelector(state => state.video);
+
+  const dispatch = useDispatch();
+
+  const path = useLocation().pathname.split("/")[2]
+
+
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const videoRes = await axios.get(`http://localhost:8800/api/video/find/${path}`)
+        const userRes = await axios.get(`http://localhost:8800/api/users/find/${videoRes.data.userId}`)
+        setUser(userRes.data)
+        dispatch(fetchSuccess(videoRes.data))
+
+      } catch (error) {
+
+      }
+    }
+
+    fetchData()
+  }, [path, dispatch])
+
+  const handleLike = async () => {
+    console.log(currentVideo._id)
+    console.log('Hited')
+    await axios.put(`http://localhost:8800/api/users/like/${currentVideo._id}`)
+    dispatch(like(currentUser._id))
+    
+  }
+
+  const handleDisLike = async () => {
+    await axios.put(`http://localhost:8800/api/users/dislike/${currentVideo._id}`)
+    dispatch(dislike(currentUser._id))
+  }
+
+
+
+
   return (
     <Container>
       <Content>
         <VideoWrapper>
           <iframe
             width="100%"
-            height="720"
+            height="580"
             src="https://www.youtube.com/embed/k3Vfj-e1Ma4"
             title="YouTube video player"
             frameborder="0"
@@ -94,15 +146,25 @@ const Video = () => {
             allowfullscreen
           ></iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>7,948,154 views • Jun 22, 2022</Info>
+          <Info>{currentVideo.videoViews} views • {currentVideo.createdAt}</Info>
           <Buttons>
-            <Button>
-              <ThumbUpOutlinedIcon /> 123
+            <Button onClick={handleLike}>
+              {currentVideo.likes?.includes(currentUser._id) ? (
+                <ThumbUpIcon />
+              ) : (
+                <ThumbUpOutlinedIcon />
+              )}{" "}
+              {currentVideo.likes?.length}
             </Button>
-            <Button>
-              <ThumbDownOffAltOutlinedIcon /> Dislike
+            <Button onClick={handleDisLike}>
+              {currentVideo.dislikes?.includes(currentUser._id) ? (
+                <ThumbDownIcon />
+              ) : (
+                <ThumbDownOffAltOutlinedIcon />
+              )}{" "}
+              Dislike
             </Button>
             <Button>
               <ReplyOutlinedIcon /> Share
@@ -112,19 +174,16 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://yt3.ggpht.com/yti/APfAmoE-Q0ZLJ4vk3vqmV4Kwp0sbrjxLyB8Q4ZgNsiRH=s88-c-k-c0x00ffffff-no-rj-mo" />
+            <ChannelName>Posted By:{" "} {currentUser.name}</ChannelName>
             <ChannelDetail>
-              <Description>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Doloribus laborum delectus unde quaerat dolore culpa sit aliquam
-                at. Vitae facere ipsum totam ratione exercitationem. Suscipit
-                animi accusantium dolores ipsam ut.
+              <Description>DESCRIPTION:{" " + " "}
+                {currentVideo.description}
               </Description>
             </ChannelDetail>
           </ChannelInfo>
         </Channel>
         <Hr />
-        <Comments/>
+        <Comments videoId={currentVideo._id}/>
       </Content>
     </Container>
   );

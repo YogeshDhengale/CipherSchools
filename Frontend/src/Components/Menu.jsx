@@ -4,6 +4,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.bgLighter};
@@ -59,12 +60,17 @@ const Button = styled.button`
 `;
 
 const Menu = ({ darkMode, setDarkMode }) => {
+
+  const { currentUser } = useSelector (state => state.user)
+
+
+
   return (
     <Container>
       <Wrapper>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo style={{fontSize:'20px', fontFamily:'Righteous'}}>
-            CipherStreams
+            CipherSchoolsStreams
           </Logo>
         </Link>
         <Item>
@@ -74,7 +80,8 @@ const Menu = ({ darkMode, setDarkMode }) => {
           </Link>
         </Item>
         <Hr />
-        <Login>
+       {!currentUser &&
+        <> <Login>
           Sign in to like videos, comment, and Share.
           <Link to="signin" style={{textDecoration:"none"}}>
             <Button>
@@ -83,7 +90,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
             </Button>
           </Link>
         </Login>
-        <Hr/>
+        <Hr/></>}
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
           {darkMode ? "Light" : "Dark"} Mode
